@@ -34,17 +34,18 @@ app.get("*", function (req, res) {
 // * POST `/api/notes` - Should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
 // Create New notes - takes in JSON input
 app.post("/api/notes", function (req, res) {
-    var newNote = req.body;
-    notes.push(newNote);
-    fs.writeFileSync("db/db.json", notes) {
+    let newNote = req.body;
+    let data = fs.readFileSync("db/db.json");
+    let notes = JSON.parse(data);
+    notes.push(newNote)
+    fs.writeFile("db/db.json", JSON.stringify(notes), function (error) {
+        if (error) {
+            throw error
+        }
+        console.log("hell yeah");
+    })
 
-
-    }
-
-
-    // console.log(notes);
-
-    // res.json(newNote);
+    res.json(newNote);
 });
 
 
